@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Checkout</title>
+  </head>
+  <body>
+    <h1>Pesanan Anda</h1>
+    <ul>
+      {% for item, qty in order.items() %}
+      <li>{{ item }} x{{ qty }} - Rp{{ menu['coffee'][item] * qty | int }}</li>
+      {% endfor %}
+    </ul>
+    <h3>Total Harga: Rp{{ total_price | int }}</h3>
+    <a href="/"><button>Kembali ke Menu</button></a>
+  </body>
+</html>

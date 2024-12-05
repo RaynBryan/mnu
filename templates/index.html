@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Menu Coffee Shop</title>
+    <link rel="stylesheet" href="/static/styles.css" />
+  </head>
+  <body>
+    <div class="container">
+      <h1>Menu Coffee Shop</h1>
+      <form action="/add_to_order" method="POST">
+        <table>
+          <thead>
+            <tr>
+              <th>Kategori</th>
+              <th>Item</th>
+              <th>Harga</th>
+              <th>Jumlah</th>
+              <th>Pesan</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for category, items in menu.items() %} {% for item, price in
+            items.items() %}
+            <tr>
+              <td>{{ category }}</td>
+              <td>{{ item }}</td>
+              <td>Rp{{ price | int | format }}</td>
+              <td>
+                <input type="hidden" name="category" value="{{ category }}" />
+                <input type="hidden" name="item" value="{{ item }}" />
+                <input
+                  type="number"
+                  name="quantity_{{ item }}"
+                  value="1"
+                  min="1"
+                  style="width: 50px"
+                />
+              </td>
+              <td>
+                <button type="submit">Tambah</button>
+              </td>
+            </tr>
+            {% endfor %} {% endfor %}
+          </tbody>
+        </table>
+      </form>
+      <h2>Pesanan Anda:</h2>
+      <ul>
+        {% for item, qty in order.items() %}
+        <li>
+          {{ item }} x{{ qty }}
+          <a href="/remove_item/{{ item }}"
+            ><button class="remove">Hapus</button></a
+          >
+        </li>
+        {% endfor %}
+      </ul>
+      <div style="text-align: center">
+        <a href="/checkout"><button>Checkout</button></a>
+      </div>
+    </div>
+    <footer>&copy; 2024 Coffee Shop - All Rights Reserved</footer>
+  </body>
+</html>
